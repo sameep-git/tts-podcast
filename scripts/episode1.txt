@@ -1,0 +1,11 @@
+Welcome to the show.
+
+Today we're talking about something that affects every developer: the invisible tax of tech debt.
+You know the feeling. You open a file to make a small change, and suddenly you're three layers deep in code that no one has touched in two years.
+The fix takes ten minutes. Understanding the context takes two hours.
+
+That invisible overhead is tech debt compounding in real time.
+
+In this episode, we'll break down how to identify it, how to talk about it with stakeholders, and most importantly, how to actually chip away at it without derailing your entire sprint.
+
+Let's get into it.

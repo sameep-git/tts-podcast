@@ -1,0 +1,2 @@
+google-cloud-texttospeech>=2.21.0
+python-dotenv>=1.0.0

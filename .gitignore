@@ -1,0 +1,11 @@
+venv/
+.env
+*.pyc
+__pycache__/
+
+# Generated audio
+output/
+
+# Custom voice key (sensitive — treat like a password)
+voice_cloning_key.txt
+voice_samples/
