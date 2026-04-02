@@ -1,11 +1,17 @@
-Welcome to the show.
+Welcome back to the show.
 
-Today we're talking about something that affects every developer: the invisible tax of tech debt.
-You know the feeling. You open a file to make a small change, and suddenly you're three layers deep in code that no one has touched in two years.
-The fix takes ten minutes. Understanding the context takes two hours.
+Today we're diving into something that shapes nearly every decision you make, even when you don't realize it: economics.
 
-That invisible overhead is tech debt compounding in real time.
+Not the dry textbook kind. We're talking about the real mechanics underneath — why prices rise, why wages stagnate, why some countries grow rich while others stay poor.
 
-In this episode, we'll break down how to identify it, how to talk about it with stakeholders, and most importantly, how to actually chip away at it without derailing your entire sprint.
+Let's start with a deceptively simple idea: scarcity. Every economy, no matter how advanced, exists because resources are limited and human wants are not. That tension — between what we have and what we want — is the engine behind all economic activity.
 
-Let's get into it.
+From that single constraint, you get trade-offs. Every dollar spent on defense is a dollar not spent on healthcare. Every hour you work is an hour you're not spending elsewhere. Economists call this opportunity cost, and once you start seeing it, you can't unsee it.
+
+Now here's where it gets interesting. Markets are humanity's answer to the coordination problem. Billions of people, each acting in their own interest, somehow produce the goods and services that other people need — without any central authority directing them. Prices are the signal. When something becomes scarce, prices rise, which tells producers to make more of it and consumers to use less. It's imperfect, but it's remarkably effective.
+
+Of course, markets fail too. Externalities, monopolies, and information asymmetries all create gaps where the free market under-delivers. That's where policy comes in — though as we'll see in future episodes, getting policy right is harder than it sounds.
+
+Today's takeaway: economics isn't about money. It's about how people make choices under constraints. Everything else follows from there.
+
+Thanks for listening. We'll see you next time.

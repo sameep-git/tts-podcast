@@ -14,22 +14,26 @@ Optional flags:
 import argparse
 import os
 import sys
+import time
 from pathlib import Path
+from typing import Optional
 
 from dotenv import load_dotenv
+from google.api_core import exceptions as gcp_exceptions
 from google.cloud import texttospeech
 
 # ---------------------------------------------------------------------------
 # Config defaults
 # ---------------------------------------------------------------------------
-DEFAULT_VOICE = "en-US-Chirp3-HD-Zephyr"
+DEFAULT_VOICE = "en-US-Chirp3-HD-Charon"
 DEFAULT_LANGUAGE = "en-US"
 # Chirp 3 HD voices top out around 5000 chars per request.
 # We split on sentence boundaries to stay safely under the limit.
 MAX_CHARS_PER_CHUNK = 4500
+MAX_RETRIES = 3
 
 
-def load_project_id(cli_project: str | None) -> str:
+def load_project_id(cli_project: Optional[str]) -> str:
     """Return project ID from CLI flag → .env → environment variable."""
     if cli_project:
         return cli_project
@@ -58,7 +62,7 @@ def read_script(path: Path) -> str:
     return text
 
 
-def split_into_chunks(text: str, max_chars: int = MAX_CHARS_PER_CHUNK) -> list[str]:
+def split_into_chunks(text: str, max_chars: int = MAX_CHARS_PER_CHUNK) -> "list[str]":
     """
     Split text into chunks that fit within the TTS API limit.
 
@@ -93,7 +97,7 @@ def split_into_chunks(text: str, max_chars: int = MAX_CHARS_PER_CHUNK) -> list[s
 
 
 def synthesize_chunks(
-    chunks: list[str],
+    chunks: "list[str]",
     client: texttospeech.TextToSpeechClient,
     voice_name: str,
     language_code: str,
@@ -112,12 +116,22 @@ def synthesize_chunks(
 
     for i, chunk in enumerate(chunks, start=1):
         print(f"  Synthesizing chunk {i}/{total} ({len(chunk)} chars)…")
-        response = client.synthesize_speech(
-            input=texttospeech.SynthesisInput(text=chunk),
-            voice=voice,
-            audio_config=audio_config,
-        )
-        audio_data += response.audio_content
+        for attempt in range(1, MAX_RETRIES + 1):
+            try:
+                response = client.synthesize_speech(
+                    input=texttospeech.SynthesisInput(text=chunk),
+                    voice=voice,
+                    audio_config=audio_config,
+                )
+                audio_data += response.audio_content
+                break
+            except gcp_exceptions.InternalServerError as e:
+                if attempt < MAX_RETRIES:
+                    wait = 2 ** attempt
+                    print(f"    ⚠️  Transient error, retrying in {wait}s… (attempt {attempt}/{MAX_RETRIES})")
+                    time.sleep(wait)
+                else:
+                    raise e
 
     return audio_data
 
